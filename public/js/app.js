@@ -90538,6 +90538,7 @@ var render = function() {
                                         return _c(
                                           "li",
                                           {
+                                            staticClass: "cursor-pointer",
                                             on: {
                                               click: function($event) {
                                                 _vm.selectPage(number)

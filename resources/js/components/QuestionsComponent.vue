@@ -35,7 +35,7 @@
                             </li>
                         </ul>
                         <ul v-if="data">
-                            <li 
+                            <li class="cursor-pointer"
                                 v-for="number in data.questions.paginatorInfo.lastPage"
                                 @click="selectPage(number)">
                                 {{number}}

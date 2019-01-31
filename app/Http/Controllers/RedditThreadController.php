@@ -66,17 +66,22 @@ class RedditThreadController extends Controller
     }
     public function threads()
     {
-        $questions = Question::where('id','>', 84)->get();
+        //$questions = Question::where('id','>', 84)->get();
+        $questions = Question::has('answers', '=', 0)
+                        ->take(200)
+                        ->get();
+        echo count($questions);
+        $created = 0;
+        $updated = 0;
         foreach($questions as $question)
         {
-            if(strpos($question['url'], "https://www.reddit.com/r/AskHistorians/comments") === true)
+            if(strpos($question['url'], "r/AskHistorians/comments") !== false)
             {
                 $parent_id = $question->id;
                 $url = explode('/', $question->url);
                 array_pop($url);
                 $url = implode('/', $url); 
                 $api = $url.".json";
-
                 $client = new \GuzzleHttp\Client([
                     'headers' => ['User-Agent' => 'AskHistoriansConsumerBot/0.0 (by /u/steerpike404)'],
                     'verify' => false]);
@@ -121,8 +126,15 @@ class RedditThreadController extends Controller
                         'distinguished'=>$item['distinguished'],
                         'created'=>$item['created']
                     ]);
+                    if($answer->wasRecentlyCreated) {
+                        $created++;
+                    } else {
+                        $updated++;
+                    }
                 }
             }
         }
+        $result = "Created: ".$created." Updated: ".$updated;
+        return $result;
     }
 }

@@ -20,3 +20,7 @@ Route::get('/reddit/threads', 'RedditThreadController@threads');
 Route::get('/questions/{id?}', function ($id = null) {
     return  view('question', ['id'=> $id]);
 });
+Route::get('/php', function () {
+    echo phpinfo();
+    return '';
+});
