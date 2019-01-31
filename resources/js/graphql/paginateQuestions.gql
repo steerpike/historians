@@ -1,0 +1,19 @@
+query($page: Int) {
+  questions(count: 50, page: $page) {
+    data {
+      id
+      title
+      text
+    }
+    paginatorInfo{
+      count
+      currentPage
+      total
+      lastPage
+      hasMorePages
+      perPage
+      lastItem
+      lastPage
+    }
+  }
+}

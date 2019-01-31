@@ -1,0 +1,12 @@
+query($id: ID!) {
+    ontology(id: $id) {
+        id
+        label
+        questions {
+            id
+            title
+            author
+            text
+        }
+    }
+}
