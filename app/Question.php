@@ -57,6 +57,8 @@ class Question extends Model
                 $topics = $this->processTopicArray($response['response']['categories'], 0.4, 'category');
             }
         }
+        $this->categorised = true;
+        $this->save();
         return $this;
     }
     public function processTopicArray($topics, $score, $type)

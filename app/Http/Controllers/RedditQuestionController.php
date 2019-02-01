@@ -78,7 +78,12 @@ class RedditQuestionController extends Controller
     }
     public function categorise()
     {
-        $questions = Question::all();
+        //$questions = Question::all();
+        $questions = Question::whereDoesntHave('ontologies')
+                    ->where('categorised','=', false)
+                    ->take(247)
+                    ->get();
+        //dd($questions);
         foreach($questions as $question)
         {
             $text = $question->getRawContent();
@@ -90,6 +95,7 @@ class RedditQuestionController extends Controller
             $response = $textrazor->analyze($text);
             $categorise = $question->processCategorisationResponse($response);
         }
+        echo count($questions);
     }
     public function latest(Request $request) 
     {

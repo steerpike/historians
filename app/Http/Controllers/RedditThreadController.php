@@ -68,6 +68,7 @@ class RedditThreadController extends Controller
     {
         //$questions = Question::where('id','>', 84)->get();
         $questions = Question::has('answers', '=', 0)
+                        ->where('processed', '=', false)
                         ->take(200)
                         ->get();
         echo count($questions);
@@ -75,6 +76,7 @@ class RedditThreadController extends Controller
         $updated = 0;
         foreach($questions as $question)
         {
+
             if(strpos($question['url'], "r/AskHistorians/comments") !== false)
             {
                 $parent_id = $question->id;
@@ -133,6 +135,8 @@ class RedditThreadController extends Controller
                     }
                 }
             }
+            $question->processed = true;
+            $question->save();
         }
         $result = "Created: ".$created." Updated: ".$updated;
         return $result;

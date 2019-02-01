@@ -22,6 +22,8 @@ class CreateQuestionsTable extends Migration
             $table->longText('html')->nullable();
             $table->text('permalink')->nullable();
             $table->text('author')->nullable();
+            $table->boolean('processed')->default('false');
+            $table->boolean('categorised')->default('false');
             $table->integer('created_utc')->nullable();
             $table->timestamps();
         });
